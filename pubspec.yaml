@@ -11,10 +11,17 @@ dependencies:
   flutter:
     sdk: flutter
 
+  # Instagram manipulation
   flutter_insta: ^1.0.1
+
+  # video population
+  video_player: ^2.7.2
 
   # state management
   flutter_riverpod: ^2.4.0
+
+  # image
+  cached_network_image: ^3.3.0
 
   file_picker: ^4.2.0
 

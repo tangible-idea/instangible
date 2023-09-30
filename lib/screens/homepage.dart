@@ -10,8 +10,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:instagible/riverpod/user_profilelist_provider.dart';
+import 'package:instagible/riverpod/videoeditlist_provider.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
+import 'package:video_player/video_player.dart';
 
 import '../model/user_model.dart';
 import '../riverpod/simple_state_provider.dart';
@@ -19,12 +20,14 @@ import '../widgets/circular_progress.dart';
 
 import 'package:flutter_insta/flutter_insta.dart';
 
+import '../widgets/data_table.dart';
+
 class MyHomePage extends ConsumerWidget {
   MyHomePage({super.key, required this.title}) {
     initGPT();
   }
 
-  FlutterInsta flutterInsta= new FlutterInsta();
+  final FlutterInsta flutterInsta= FlutterInsta();
   final String title;
 
   Future<List<int>> _readDocumentData(String name) async {
@@ -63,12 +66,26 @@ class MyHomePage extends ConsumerWidget {
     String downloadLink =  await flutterInsta.downloadReels("https://www.instagram.com/reel/CDlGkdZgB2y/"); //URL
   }
 
+  getListOfFeeds(WidgetRef ref) async {
+
+    await flutterInsta.getProfileData("thatgymhumour");
+    // add feed items to state.
+    flutterInsta.feedImagesUrl?.forEach((e) =>
+        ref.read(feedEditListProvider.notifier).addFeedModel(
+          FeedModel(link: e)
+        )
+    );
+  }
+
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final fileRef= ref.watch(fileProvider);
     final responseRef= ref.watch(responseProvider);
     final loadingRef= ref.watch(loadingProvider);
+    final videoLink= ref.watch(videoLinkProvider);
+
+
 
     return Scaffold(
       appBar: AppBar(
@@ -82,9 +99,9 @@ class MyHomePage extends ConsumerWidget {
         ),
         ],
       ),
-      body: const SizedBox(),
+      body: Container(child: CVTable()),
       floatingActionButton: FloatingActionButton(
-        onPressed: ()=> downloadReels(),
+        onPressed: ()=> getListOfFeeds(ref),
         tooltip: 'pick files',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.

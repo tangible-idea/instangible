@@ -1,15 +1,15 @@
 import 'dart:convert';
 
-UserModel userModelFromJson(String response) {
+FeedModel feedModelFromJson(String response) {
   var jsonResponse= json.decode(response);
 
-  UserModel user;
+  FeedModel user;
   try {
-    user= UserModel.fromJson(jsonResponse);
+    user= FeedModel.fromJson(jsonResponse);
   } catch(e) {
     print("exception from fromJson: $e");
     print("jsonResponse: $jsonResponse");
-    user= UserModel();
+    user= FeedModel();
   }
 
   // github put http
@@ -20,7 +20,7 @@ UserModel userModelFromJson(String response) {
   return user;
 }
 
-String userModelToJson(List<UserModel> data) {
+String feedModelToJson(List<FeedModel> data) {
   return json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 }
 
@@ -41,22 +41,22 @@ String userModelToJson(List<UserModel> data) {
 // ],
 // "experienceYear": 4
 // }
-class UserModel {
-  String name;
-  String headline;
+class FeedModel {
+  bool isVideo;
+  String content;
   String location;
-  String email;
+  String link;
   String github;
   String number;
   double experienceYear;
   List<String> skillsFrontend;
   List<String> skillsBackend;
 
-  UserModel({
-    this.name = '',
-    this.headline= '',
+  FeedModel({
+    this.isVideo = false,
+    this.content= '',
     this.location = '',
-    this.email = '',
+    this.link = '',
     this.github = '',
     this.number = '',
     this.experienceYear = 0.0,
@@ -67,10 +67,10 @@ class UserModel {
 
   Map<String, dynamic> toJson() {
     return {
-      'name': name,
-      'headline': headline,
+      'isVideo': isVideo,
+      'content': content,
       'location': location,
-      'email': email,
+      'link': link,
       'github': github,
       'number': number,
       'experienceYear': experienceYear,
@@ -79,7 +79,7 @@ class UserModel {
     };
   }
 
-  factory UserModel.fromJson(Map<String, dynamic> json) {
+  factory FeedModel.fromJson(Map<String, dynamic> json) {
 
     dynamic experienceYear= json['experienceYear'];
     double lfExperienceYear= 0.0;
@@ -87,11 +87,11 @@ class UserModel {
       lfExperienceYear= experienceYear;
     }
 
-    return UserModel(
-      name: json['name'] ?? '',
-      headline: json['headline'] ?? '',
+    return FeedModel(
+      isVideo: json['isVideo'] ?? '',
+      content: json['content'] ?? '',
       location: json['location'] ?? '',
-      email: json['email'] ?? '',
+      link: json['link'] ?? '',
       github: json['github'] ?? '',
       number: json['number'] ?? '',
       experienceYear: lfExperienceYear,

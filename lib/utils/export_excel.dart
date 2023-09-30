@@ -10,7 +10,7 @@ import '../model/user_model.dart';
 
 class ExportUtil {
 
-  static void exportUserModelsToExcel(List<UserModel> users, String directoryPath) async {
+  static void exportUserModelsToExcel(List<FeedModel> users, String directoryPath) async {
     // Create an Excel workbook and sheet
     var excel = Excel.createExcel();
     var sheet = excel["Sheet1"];
@@ -34,10 +34,10 @@ class ExportUtil {
     // Write user data
     for (var rowIndex = 0; rowIndex < users.length; rowIndex++) {
       var user = users[rowIndex];
-      sheet.cell(CellIndex.indexByColumnRow(columnIndex: 0, rowIndex: rowIndex + 1)).value = user.name;
-      sheet.cell(CellIndex.indexByColumnRow(columnIndex: 1, rowIndex: rowIndex + 1)).value = user.headline;
+      sheet.cell(CellIndex.indexByColumnRow(columnIndex: 0, rowIndex: rowIndex + 1)).value = user.isVideo;
+      sheet.cell(CellIndex.indexByColumnRow(columnIndex: 1, rowIndex: rowIndex + 1)).value = user.content;
       sheet.cell(CellIndex.indexByColumnRow(columnIndex: 2, rowIndex: rowIndex + 1)).value = user.location;
-      sheet.cell(CellIndex.indexByColumnRow(columnIndex: 3, rowIndex: rowIndex + 1)).value = user.email;
+      sheet.cell(CellIndex.indexByColumnRow(columnIndex: 3, rowIndex: rowIndex + 1)).value = user.link;
       sheet.cell(CellIndex.indexByColumnRow(columnIndex: 4, rowIndex: rowIndex + 1)).value = user.github;
       sheet.cell(CellIndex.indexByColumnRow(columnIndex: 5, rowIndex: rowIndex + 1)).value = user.number;
       sheet.cell(CellIndex.indexByColumnRow(columnIndex: 6, rowIndex: rowIndex + 1)).value = user.experienceYear.toString();
