@@ -21,6 +21,7 @@ import '../widgets/circular_progress.dart';
 import 'package:flutter_insta/flutter_insta.dart';
 
 import '../widgets/data_table.dart';
+import '../widgets/message_input_dialog.dart';
 
 class MyHomePage extends ConsumerWidget {
   MyHomePage({super.key, required this.title}) {
@@ -66,9 +67,9 @@ class MyHomePage extends ConsumerWidget {
     String downloadLink =  await flutterInsta.downloadReels("https://www.instagram.com/reel/CDlGkdZgB2y/"); //URL
   }
 
-  getListOfFeeds(WidgetRef ref) async {
+  getListOfFeeds(WidgetRef ref, String targetValue) async {
 
-    await flutterInsta.getProfileData("thatgymhumour");
+    await flutterInsta.getProfileData(targetValue);
     // add feed items to state.
     flutterInsta.feedImagesUrl?.forEach((e) =>
         ref.read(feedEditListProvider.notifier).addFeedModel(
@@ -84,24 +85,33 @@ class MyHomePage extends ConsumerWidget {
     final responseRef= ref.watch(responseProvider);
     final loadingRef= ref.watch(loadingProvider);
     final videoLink= ref.watch(videoLinkProvider);
+    final dialogMessageRef= ref.watch(messageProvider);
 
+    ref.listen(messageProvider, (previous, next) {
+      getListOfFeeds(ref, next);
+    });
 
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text("Instagible", style: Theme.of(context).textTheme.titleLarge),
+        title: Text("Instangible", style: Theme.of(context).textTheme.titleLarge),
           actions: [
             IconButton(
-            icon: const Icon(Icons.import_export),
+            icon: const Icon(Icons.download),
               onPressed: () {
+
             },
-        ),
+          ),
         ],
       ),
-      body: Container(child: CVTable()),
+      body: const CVTable(),
       floatingActionButton: FloatingActionButton(
-        onPressed: ()=> getListOfFeeds(ref),
+        onPressed: ()=> {
+          //showDialog(context: context, builder: ()=> {return MessageInputDialog()})
+          MessageInputDialog.showInputDialog(context, ref)
+          //ref.read(showDialogProvider.notifier).state= true
+        },//getListOfFeeds(ref),
         tooltip: 'pick files',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
