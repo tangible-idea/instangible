@@ -11,8 +11,12 @@ dependencies:
   flutter:
     sdk: flutter
 
+  flutter_insta:
+    git:
+      url: https://github.com/Tangibleidea/flutter_insta
+
   # Instagram manipulation
-  flutter_insta: ^1.0.1
+  #flutter_insta: ^1.0.1
 
   # video population
   video_player: ^2.7.2

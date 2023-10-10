@@ -30,47 +30,31 @@ class CVTable extends ConsumerWidget {
       return Card(
         child: Column(
           children: [
-            ListTile(
-              leading: CircleAvatar(
-                backgroundImage: CachedNetworkImageProvider(
+            Image(
+              image: CachedNetworkImageProvider(
                   item.link
-                ),
-              ),
-              title: Text(item.link),
-              subtitle: Text(item.location),
-              trailing: IconButton(
-                icon: const Icon(Icons.more_vert),
-                onPressed: () {
-                  // Handle more options button press
-                },
               ),
             ),
-            // CachedNetworkImage(
-            //   imageUrl: item.imageUrl,
-            //   fit: BoxFit.cover,
-            //   placeholder: (context, url) => CircularProgressIndicator(),
-            //   errorWidget: (context, url, error) => Icon(Icons.error),
-            // ),
             Padding(
-              padding: EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(16.0),
               child: Text(item.content),
             ),
             ButtonBar(
               children: [
                 IconButton(
-                  icon: Icon(Icons.favorite_border),
+                  icon: const Icon(Icons.favorite_border),
                   onPressed: () {
                     // Handle like button press
                   },
                 ),
                 IconButton(
-                  icon: Icon(Icons.comment),
+                  icon: const Icon(Icons.comment),
                   onPressed: () {
                     // Handle comment button press
                   },
                 ),
                 IconButton(
-                  icon: Icon(Icons.share),
+                  icon: const Icon(Icons.share),
                   onPressed: () {
                     // Handle share button press
                   },
