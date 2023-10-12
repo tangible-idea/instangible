@@ -3,27 +3,22 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:chat_gpt_sdk/chat_gpt_sdk.dart';
-import 'package:dart_pdf_reader/dart_pdf_reader.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:instagible/riverpod/videoeditlist_provider.dart';
-import 'package:syncfusion_flutter_pdf/pdf.dart';
 import 'package:video_player/video_player.dart';
 
 import '../model/user_model.dart';
 import '../riverpod/simple_state_provider.dart';
 import '../utils/flutter_insta.dart';
-import '../widgets/circular_progress.dart';
-//import 'package:flutter_insta/flutter_insta.dart';
 
-import '../widgets/data_table.dart';
+import '../widgets/my_feed_table.dart';
 import '../widgets/message_input_dialog.dart';
 
 class MyHomePage extends ConsumerWidget {
+  static String id = "/home";
   MyHomePage({super.key, required this.title}) {
     initGPT();
   }

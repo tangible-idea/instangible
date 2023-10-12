@@ -10,3 +10,5 @@ final loadingProvider= StateProvider((ref) => false);
 
 final videoLinkProvider= StateProvider((ref) => "");
 
+
+final selectedFeedProvider= StateProvider((ref) => "");

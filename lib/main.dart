@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:instagible/screens/edit_feed_page.dart';
 import 'package:instagible/screens/homepage.dart';
 import 'package:instagible/styles/themes.dart';
 
@@ -18,6 +19,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ProviderScope(
       child: MaterialApp(
+        initialRoute: MyHomePage.id,
+        routes: {
+          MyHomePage.id: (context) => MyHomePage(title: '',),
+          EditFeedPage.id: (context) => const EditFeedPage(),
+        },
         title: 'Instangible',
         theme: AppTheme.lightTheme,
         darkTheme: AppTheme.darkTheme,

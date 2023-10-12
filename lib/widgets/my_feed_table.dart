@@ -1,11 +1,8 @@
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:data_table_2/data_table_2.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:url_launcher/url_launcher.dart';
-
+import 'package:instagible/riverpod/simple_state_provider.dart';
 import '../model/user_model.dart';
 import '../riverpod/videoeditlist_provider.dart';
 
@@ -13,38 +10,28 @@ import '../riverpod/videoeditlist_provider.dart';
 class FeedTable extends ConsumerWidget {
   FeedTable({super.key});
 
-  TextEditingController textController= TextEditingController();
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final feedProvider= ref.watch(feedEditListProvider);
+    final feedWatch= ref.watch(feedEditListProvider);
+    final selectedFeedNotifier= ref.read(selectedFeedProvider.notifier);
 
-    if (feedProvider.isEmpty) {
+
+    if (feedWatch.isEmpty) {
       return const SizedBox.shrink();
     }
     else{
       Column(children:
-        feedProvider.map((e) => Text(e.link)).toList(),
+        feedWatch.map((e) => Text(e.link)).toList(),
       );
     }
 
     Widget _buildFeedItem(FeedModel item) {
-      textController.text= item.link;
       return Card(
         child: Column(
           children: [
             Image(
               image: CachedNetworkImageProvider(
                   item.link
-              ),
-            ),
-            TextField(
-              controller: textController,
-              decoration: const InputDecoration(
-                hintText: 'Hint',
-                helperText: 'Helper',
-                labelText: 'Label',
-                border: OutlineInputBorder(),
               ),
             ),
             Padding(
@@ -63,6 +50,8 @@ class FeedTable extends ConsumerWidget {
                   icon: const Icon(Icons.edit),
                   onPressed: () {
                     // Handle comment button press
+                    selectedFeedNotifier.state= item.link;
+                    Navigator.of(context).pushNamed("/edit");
                   },
                 ),
                 IconButton(
@@ -79,9 +68,9 @@ class FeedTable extends ConsumerWidget {
     }
 
     return ListView.builder(
-      itemCount: feedProvider.length,
+      itemCount: feedWatch.length,
       itemBuilder: (context, index) {
-        return _buildFeedItem(feedProvider[index]);
+        return _buildFeedItem(feedWatch[index]);
       },
     );
 
