@@ -50,7 +50,7 @@ class FeedTable extends ConsumerWidget {
                   icon: const Icon(Icons.edit),
                   onPressed: () {
                     // Handle comment button press
-                    selectedFeedNotifier.state= item.link;
+                    selectedFeedNotifier.state= item;
                     Navigator.of(context).pushNamed("/edit");
                   },
                 ),

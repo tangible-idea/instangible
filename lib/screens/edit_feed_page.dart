@@ -12,11 +12,11 @@ class EditFeedPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     var selecteFeedProvider= ref.watch(selectedFeedProvider.notifier);
 
-    return selecteFeedProvider.state.isEmpty ?
+    return selecteFeedProvider.state.link.isEmpty ?
         const Placeholder()
         : Image(
         image: CachedNetworkImageProvider(
-            selecteFeedProvider.state
+            selecteFeedProvider.state.link
         ),
       );
   }

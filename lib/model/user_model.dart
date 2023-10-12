@@ -13,8 +13,8 @@ FeedModel feedModelFromJson(String response) {
   }
 
   // github put http
-  if(user.github.isNotEmpty && !user.github.startsWith("http")) {
-    user.github = "https://${user.github}";
+  if(user.description.isNotEmpty && !user.description.startsWith("http")) {
+    user.description = "https://${user.description}";
   }
 
   return user;
@@ -46,7 +46,7 @@ class FeedModel {
   String content;
   String location;
   String link;
-  String github;
+  String description;
   String number;
   double experienceYear;
   List<String> skillsFrontend;
@@ -57,7 +57,7 @@ class FeedModel {
     this.content= '',
     this.location = '',
     this.link = '',
-    this.github = '',
+    this.description = '',
     this.number = '',
     this.experienceYear = 0.0,
     List<String>? skillsFrontend,
@@ -71,7 +71,7 @@ class FeedModel {
       'content': content,
       'location': location,
       'link': link,
-      'github': github,
+      'github': description,
       'number': number,
       'experienceYear': experienceYear,
       'skillsFrontend': skillsFrontend,
@@ -92,7 +92,7 @@ class FeedModel {
       content: json['content'] ?? '',
       location: json['location'] ?? '',
       link: json['link'] ?? '',
-      github: json['github'] ?? '',
+      description: json['github'] ?? '',
       number: json['number'] ?? '',
       experienceYear: lfExperienceYear,
       skillsFrontend: List<String>.from(json['skillsFrontend'] ?? []),

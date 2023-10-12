@@ -68,7 +68,9 @@ class MyHomePage extends ConsumerWidget {
     // add feed items to state.
     flutterInsta.feedImagesUrl?.forEach((e) =>
         ref.read(feedEditListProvider.notifier).addFeedModel(
-          FeedModel(link: e)
+          FeedModel(
+              link: e
+          ) // TODO: assign
         )
     );
   }
