@@ -88,7 +88,7 @@ class FeedModel {
     }
 
     return FeedModel(
-      isVideo: json['isVideo'] ?? '',
+      isVideo: json['is_video'] ?? '',
       content: json['content'] ?? '',
       location: json['location'] ?? '',
       link: json['link'] ?? '',

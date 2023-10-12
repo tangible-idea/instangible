@@ -10,8 +10,10 @@ import '../model/user_model.dart';
 import '../riverpod/videoeditlist_provider.dart';
 
 /// refer to [FeedModel]
-class CVTable extends ConsumerWidget {
-  const CVTable({super.key});
+class FeedTable extends ConsumerWidget {
+  FeedTable({super.key});
+
+  TextEditingController textController= TextEditingController();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -27,12 +29,22 @@ class CVTable extends ConsumerWidget {
     }
 
     Widget _buildFeedItem(FeedModel item) {
+      textController.text= item.link;
       return Card(
         child: Column(
           children: [
             Image(
               image: CachedNetworkImageProvider(
                   item.link
+              ),
+            ),
+            TextField(
+              controller: textController,
+              decoration: const InputDecoration(
+                hintText: 'Hint',
+                helperText: 'Helper',
+                labelText: 'Label',
+                border: OutlineInputBorder(),
               ),
             ),
             Padding(
@@ -48,7 +60,7 @@ class CVTable extends ConsumerWidget {
                   },
                 ),
                 IconButton(
-                  icon: const Icon(Icons.comment),
+                  icon: const Icon(Icons.edit),
                   onPressed: () {
                     // Handle comment button press
                   },

@@ -49,7 +49,6 @@ class FlutterInsta {
     final mappedData = filteredOne.map<String>((image) => image['node']['video_url'] as String).toList();
 
     _feedVideoUrl = mappedData;
-    //.map<String>((image) => { image['node']['display_url'] as String } );
     _username = username;
   }
 

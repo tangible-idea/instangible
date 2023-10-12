@@ -16,9 +16,9 @@ import 'package:video_player/video_player.dart';
 
 import '../model/user_model.dart';
 import '../riverpod/simple_state_provider.dart';
+import '../utils/flutter_insta.dart';
 import '../widgets/circular_progress.dart';
-
-import 'package:flutter_insta/flutter_insta.dart';
+//import 'package:flutter_insta/flutter_insta.dart';
 
 import '../widgets/data_table.dart';
 import '../widgets/message_input_dialog.dart';
@@ -105,7 +105,7 @@ class MyHomePage extends ConsumerWidget {
           ),
         ],
       ),
-      body: const CVTable(),
+      body: FeedTable(),
       floatingActionButton: FloatingActionButton(
         onPressed: ()=> {
           //showDialog(context: context, builder: ()=> {return MessageInputDialog()})
