@@ -1,6 +1,8 @@
 import 'dart:convert';
 
-import 'package:http/http.dart' as http; // import http package for API calls
+import 'package:http/http.dart' as http;
+
+import '../model/user_model.dart'; // import http package for API calls
 
 class FlutterInsta {
   String url = "https://www.instagram.com/";
@@ -8,6 +10,7 @@ class FlutterInsta {
   // List of images from user feed
   List<String>? _feedImagesUrl;
   List<String>? _feedVideoUrl;
+  List<FeedModel>? _feedList;
 
   //Download reels video
   Future<String> downloadReels(String link) async {
@@ -24,9 +27,7 @@ class FlutterInsta {
 
   //get profile details
   Future<void> getProfileData(String username) async {
-    var res = await http.get(Uri.parse(Uri.encodeFull(url +
-        username +
-        "/?__a=1&__d=dis"))); // adding /?__a=1&__d=dis at the end will return json data
+    var res = await http.get(Uri.parse(Uri.encodeFull("$url$username/?__a=1&__d=dis"))); // adding /?__a=1&__d=dis at the end will return json data
     var data = json.decode(res.body);
     var graphql = data['graphql'];
     var user = graphql['user'];
@@ -40,6 +41,11 @@ class FlutterInsta {
     _imgurl = user['profile_pic_url_hd'];
 
     var ownerEdges= user['edge_owner_to_timeline_media']['edges'];
+
+    // _feedList =
+    //     ownerEdges
+    //     .map<String>((feed) => FeedModel().fromJson(feed['node']))
+    //     .toList();
 
     _feedImagesUrl = ownerEdges
         .map<String>((image) => image['node']['display_url'] as String)
@@ -63,6 +69,9 @@ class FlutterInsta {
   get bio => _bio; // Instagram bio of the user
 
   get imgurl => _imgurl; // Profile picture URL
+
+  List<FeedModel>? get feedList =>
+      _feedList; // List of feeds
 
   List<String>? get feedImagesUrl =>
       _feedImagesUrl; // List of URLs of feed images

@@ -1,102 +1,62 @@
 import 'dart:convert';
 
-FeedModel feedModelFromJson(String response) {
-  var jsonResponse= json.decode(response);
-
-  FeedModel user;
-  try {
-    user= FeedModel.fromJson(jsonResponse);
-  } catch(e) {
-    print("exception from fromJson: $e");
-    print("jsonResponse: $jsonResponse");
-    user= FeedModel();
-  }
-
-  // github put http
-  if(user.description.isNotEmpty && !user.description.startsWith("http")) {
-    user.description = "https://${user.description}";
-  }
-
-  return user;
-}
 
 String feedModelToJson(List<FeedModel> data) {
   return json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 }
 
-// {
-// "name": "JaeJun Lee",
-// "headline": "Frontend Programmer",
-// "number": "+82 10 2858 4900",
-// "email": "slugj2020@gmail.com",
-// "location": "South Korea",
-// "skillsFrontend": [
-// "Dart / Flutter",
-// "Java",
-// "Javascript (Typescript)"
-// ],
-// "skillsBackend": [
-// "Nest",
-// "AWS lambda"
-// ],
-// "experienceYear": 4
-// }
 class FeedModel {
+  String id;
   bool isVideo;
   String content;
-  String location;
+  String displayUrl;
   String link;
   String description;
-  String number;
-  double experienceYear;
-  List<String> skillsFrontend;
-  List<String> skillsBackend;
+  String videoViewCount;
+  double videoDuration;
+
 
   FeedModel({
+    this.id= '',
     this.isVideo = false,
     this.content= '',
-    this.location = '',
+    this.displayUrl = '',
     this.link = '',
     this.description = '',
-    this.number = '',
-    this.experienceYear = 0.0,
-    List<String>? skillsFrontend,
-    List<String>? skillsBackend,
-  }) : skillsFrontend = skillsFrontend ?? [],
-        skillsBackend = skillsBackend ?? [];
+    this.videoViewCount = '',
+    this.videoDuration = 0.0,
+  });
 
   Map<String, dynamic> toJson() {
     return {
+      'id': id,
       'isVideo': isVideo,
       'content': content,
-      'location': location,
+      'displayUrl': displayUrl,
       'link': link,
       'github': description,
-      'number': number,
-      'experienceYear': experienceYear,
-      'skillsFrontend': skillsFrontend,
-      'skillsBackend': skillsBackend,
+      'video_view_count': videoViewCount,
+      'video_duration': videoDuration,
     };
   }
 
-  factory FeedModel.fromJson(Map<String, dynamic> json) {
+  fromJson(Map<String, dynamic> json) {
 
-    dynamic experienceYear= json['experienceYear'];
-    double lfExperienceYear= 0.0;
-    if(experienceYear != null && experienceYear != 0) {
-      lfExperienceYear= experienceYear;
-    }
+    // dynamic experienceYear= json['video_duration'];
+    // double lfExperienceYear= 0.0;
+    // if(experienceYear != null && experienceYear != 0) {
+    //   lfExperienceYear= experienceYear;
+    // }
 
     return FeedModel(
+      id: json['id'] ?? '',
       isVideo: json['is_video'] ?? '',
       content: json['content'] ?? '',
-      location: json['location'] ?? '',
+      displayUrl: json['display_url'] ?? '',
       link: json['link'] ?? '',
-      description: json['github'] ?? '',
-      number: json['number'] ?? '',
-      experienceYear: lfExperienceYear,
-      skillsFrontend: List<String>.from(json['skillsFrontend'] ?? []),
-      skillsBackend: List<String>.from(json['skillsBackend'] ?? []),
+      description: json['edge_media_to_caption']['edges'][0]['node']['text'] ?? '',
+      videoViewCount: json['video_view_count'] ?? '',
+      videoDuration: json['video_duration']
     );
   }
 }

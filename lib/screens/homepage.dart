@@ -66,11 +66,12 @@ class MyHomePage extends ConsumerWidget {
 
     await flutterInsta.getProfileData(targetValue);
     // add feed items to state.
-    flutterInsta.feedImagesUrl?.forEach((e) =>
+    flutterInsta.feedImagesUrl?.asMap().forEach((index, element) =>
         ref.read(feedEditListProvider.notifier).addFeedModel(
           FeedModel(
-              link: e
-          ) // TODO: assign
+              displayUrl: element,
+              link: flutterInsta.feedVideosUrl![index].toString() // TODO: exception handling
+          )
         )
     );
   }

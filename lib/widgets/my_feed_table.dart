@@ -31,7 +31,7 @@ class FeedTable extends ConsumerWidget {
           children: [
             Image(
               image: CachedNetworkImageProvider(
-                  item.link
+                  item.displayUrl
               ),
             ),
             Padding(
