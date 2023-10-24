@@ -58,8 +58,8 @@ class MyHomePage extends ConsumerWidget {
     return resume;
   }
 
-  downloadReels() async {
-    String downloadLink =  await flutterInsta.downloadReels("https://www.instagram.com/reel/CDlGkdZgB2y/"); //URL
+  downloadReels(String link) async {
+    String downloadLink =  await flutterInsta.downloadReels(link); //URL
   }
 
   getListOfFeeds(WidgetRef ref, String targetValue) async {
@@ -97,8 +97,11 @@ class MyHomePage extends ConsumerWidget {
           actions: [
             IconButton(
             icon: const Icon(Icons.download),
-              onPressed: () {
+              onPressed: () async {
 
+                ClipboardData? data = await Clipboard.getData('text/plain');
+                ref.read(messageProvider.notifier).state= data?.text.toString() ?? "";
+                MessageInputDialog.showInputDialog(context, ref);
             },
           ),
         ],
@@ -110,7 +113,7 @@ class MyHomePage extends ConsumerWidget {
           MessageInputDialog.showInputDialog(context, ref)
           //ref.read(showDialogProvider.notifier).state= true
         },//getListOfFeeds(ref),
-        tooltip: 'pick files',
+        tooltip: 'put Instagram ID',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
