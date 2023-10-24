@@ -1,14 +1,21 @@
 
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:instagible/riverpod/simple_state_provider.dart';
+import 'package:instagible/screens/edit_feed_page.dart';
+import 'package:instagible/utils/file_utils.dart';
 import '../model/user_model.dart';
 import '../riverpod/videoeditlist_provider.dart';
+
+
 
 /// refer to [FeedModel]
 class FeedTable extends ConsumerWidget {
   FeedTable({super.key});
+  static File fileEditTarget= File("");
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -48,10 +55,14 @@ class FeedTable extends ConsumerWidget {
                 ),
                 IconButton(
                   icon: const Icon(Icons.edit),
-                  onPressed: () {
+                  onPressed: () async {
                     // Handle comment button press
+                    var targetFile= await FileUtils.downloadFile(item.link, "./download.mp4");
+                    //item.downloadedFile= targetFile;
+                    fileEditTarget= targetFile;
+
                     selectedFeedNotifier.state= item;
-                    Navigator.of(context).pushNamed("/edit");
+                    Navigator.of(context).pushNamed(EditFeedPage.id);
                   },
                 ),
                 IconButton(

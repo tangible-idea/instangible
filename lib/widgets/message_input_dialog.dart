@@ -1,4 +1,4 @@
-import 'dart:ffi';
+//import 'dart:ffi';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +19,8 @@ class MessageInputDialog {
           title: Column(
             children: [
               const Text('Enter Message'),
-              TextField(
+              TextFormField(
+                initialValue: ref.watch(messageProvider.notifier).state,
                 onChanged: (value) {
                   //ref.read(messageProvider.notifier).state= value;
                   editedValue= value;

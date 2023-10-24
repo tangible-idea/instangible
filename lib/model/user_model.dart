@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 
 String feedModelToJson(List<FeedModel> data) {
@@ -14,6 +15,7 @@ class FeedModel {
   String description;
   String videoViewCount;
   double videoDuration;
+  File? downloadedFile;
 
 
   FeedModel({
