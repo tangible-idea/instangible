@@ -34,11 +34,7 @@ class MessageInputDialog {
               child: const Text('OK'),
               onPressed: () {
 
-                if(editedValue.isEmpty) {
-                  ref.read(messageProvider.notifier).state= "gymweirdos";
-                } else {
-                  ref.read(messageProvider.notifier).state= editedValue;
-                }
+                ref.read(messageProvider.notifier).state= editedValue;
                 // Do something with the message
                 //print('Message: ${messageRef.state}');
                 Navigator.of(context).pop(); // Close the dialog
