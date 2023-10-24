@@ -29,6 +29,11 @@ class FlutterInsta {
   Future<void> getProfileData(String username) async {
     var res = await http.get(Uri.parse(Uri.encodeFull("$url$username/?__a=1&__d=dis"))); // adding /?__a=1&__d=dis at the end will return json data
     var data = json.decode(res.body);
+
+    if(data['status'].toString() == "fail") {
+      //throw Exception();
+      return;
+    }
     var graphql = data['graphql'];
     var user = graphql['user'];
     var biography = user['biography'];
