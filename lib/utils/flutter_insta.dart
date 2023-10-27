@@ -32,6 +32,7 @@ class FlutterInsta {
 
     if(data['status'].toString() == "fail") {
       //throw Exception();
+      print("fail!");
       return;
     }
     var graphql = data['graphql'];

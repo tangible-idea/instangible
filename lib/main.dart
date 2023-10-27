@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:instagible/screens/edit_feed_page.dart';
+import 'package:instagible/screens/edit_youtube_page.dart';
 import 'package:instagible/screens/homepage.dart';
 import 'package:instagible/styles/themes.dart';
 
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
         routes: {
           MyHomePage.id: (context) => MyHomePage(title: '',),
           EditFeedPage.id: (context) => const EditFeedPage(),
+          EditYoutubePage.id: (context) => const EditYoutubePage(),
         },
         title: 'Instangible',
         theme: AppTheme.lightTheme,

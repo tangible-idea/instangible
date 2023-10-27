@@ -11,40 +11,41 @@ import 'package:path_provider/path_provider.dart';
 import 'package:video_editor/domain/bloc/controller.dart';
 import 'package:video_editor/ui/cover/cover_viewer.dart';
 import 'package:video_editor/ui/crop/crop_grid.dart';
+import 'package:video_editor/ui/trim/trim_slider.dart';
+import 'package:video_editor/ui/trim/trim_timeline.dart';
+import 'package:video_editor/ui/video_viewer.dart';
 import 'package:video_player/video_player.dart';
 
 import '../riverpod/simple_state_provider.dart';
 import '../widgets/message_input_dialog.dart';
 
-class EditFeedPage extends ConsumerStatefulWidget {
-  static String id = "/edit";
-  const EditFeedPage({super.key});
+class EditYoutubePage extends ConsumerStatefulWidget {
+  static String id = "/edit_youtube";
+  const EditYoutubePage({super.key});
 
   @override
-  EditFeedState createState() => EditFeedState();
+  EditYoutubeState createState() => EditYoutubeState();
 }
 
-class EditFeedState extends ConsumerState<EditFeedPage> {
+class EditYoutubeState extends ConsumerState<EditYoutubePage> {
+
+  static String targetFilePath= "";
 
   late VideoPlayerController _videoController;
   late final VideoEditorController _editController= VideoEditorController.file(
-    FeedTable.fileEditTarget,
+    File(targetFilePath),
     minDuration: const Duration(seconds: 1),
-    maxDuration: const Duration(seconds: 10),
+    maxDuration: const Duration(seconds: 30),
   );
 
   @override
   void initState() {
     super.initState();
     // "ref" can be used in all life-cycles of a StatefulWidget.
-    var selectedFeedNotifier= ref.read(selectedFeedProvider);
+    //var selectedFeedNotifier= ref.read(selectedFeedProvider);
 
-    _videoController = VideoPlayerController.networkUrl(Uri.parse(
-        selectedFeedNotifier.link))
+    _videoController = VideoPlayerController.networkUrl(File(targetFilePath).uri)
       ..initialize().then((_) {
-        // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
-        // TODO;
-        selectedFeedNotifier.isVideo= true;
         setState(() {});
       });
 
@@ -55,7 +56,10 @@ class EditFeedState extends ConsumerState<EditFeedPage> {
         // handle minumum duration bigger than video duration error
           Navigator.pop(context);
       }, test: (e) => e is VideoMinDurationError)
-        .then((_) => setState(() {}));
+        .then((_) => setState(() {}))
+        .catchError((error) {
+        print(error.toString());
+    });
   }
 
   @override
@@ -102,48 +106,55 @@ class EditFeedState extends ConsumerState<EditFeedPage> {
           IconButton(
             icon: const Icon(Icons.download),
             onPressed: () async {
-
               //ref.read(messageProvider.notifier).state= "gymweirdos";
               //MessageInputDialog.showInputDialog(context, ref);
               setState(() {
-
               });
-
             },
           ),
         ],
     ),
-    body: _editController.initialized ? Stack(
-      alignment: Alignment.center,
+    body: _editController.initialized ? Column(
       children: [
-        CropGridViewer.preview(
-            controller: _editController),
-        AnimatedBuilder(
-          animation: _editController.video,
-          builder: (_, __) => AnimatedOpacity(
-            opacity:
-            _editController.isPlaying ? 0 : 1,
-            duration: kThemeAnimationDuration,
-            child: GestureDetector(
-              onTap: _editController.video.play,
-              child: Container(
-                width: 40,
-                height: 40,
-                decoration:
-                const BoxDecoration(
-                  color: Colors.white,
-                  shape: BoxShape.circle,
-                ),
-                child: const Icon(
-                  Icons.play_arrow,
-                  color: Colors.black,
+        Expanded(
+          child: FractionallySizedBox(
+            heightFactor: 0.8, // 80% width
+            child: Stack(children: [
+              VideoViewer(controller: _editController),
+              Center(
+                child: AnimatedBuilder(
+                  animation: _editController.video,
+                  builder: (_, __) => AnimatedOpacity(
+                    opacity:
+                    _editController.isPlaying ? 0 : 1,
+                    duration: kThemeAnimationDuration,
+                    child: GestureDetector(
+                      onTap: _editController.video.play,
+                      child: Container(
+                        width: 40,
+                        height: 40,
+                        decoration:
+                        const BoxDecoration(
+                          color: Colors.white,
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Icon(
+                          Icons.play_arrow,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
               ),
-            ),
+            ],)
           ),
         ),
-        CoverViewer(controller: _editController)
-      ])
+
+        TrimSlider(controller: _editController),
+        //CropGridViewer.preview(controller: _editController),
+      ],
+    )
 
             : const SizedBox()
     );

@@ -85,9 +85,9 @@ class MyHomePage extends ConsumerWidget {
     final videoLink= ref.watch(videoLinkProvider);
     final dialogMessageRef= ref.watch(messageProvider);
 
-    ref.listen(messageProvider, (previous, next) {
-      getListOfFeeds(ref, next);
-    });
+    // ref.listen(messageProvider, (previous, next) {
+    //   getListOfFeeds(ref, next);
+    // });
 
 
     return Scaffold(

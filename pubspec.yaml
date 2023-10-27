@@ -11,7 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  http: ^0.13.3
+  http: ^1.1.0
 
 #  flutter_insta:
 #    git:
@@ -20,6 +20,9 @@ dependencies:
 
   # Instagram manipulation
   #flutter_insta: ^1.0.1
+
+  # youtube downloader
+  youtube_explode_dart: ^2.0.2
 
   # video editing
   video_editor: ^2.4.0
