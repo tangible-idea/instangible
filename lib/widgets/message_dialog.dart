@@ -7,10 +7,12 @@ class MessageDialog extends StatefulWidget {
 
   // The callback function with data you want to return -------|
   final Function(String value) onConfirm;      // <------------|
+  final String initalString;
 
   const MessageDialog({
     Key? key,
     required this.onConfirm,
+    required this.initalString
   }) : super(key: key);
 }
 
@@ -24,7 +26,7 @@ class _MessageDialogState extends State<MessageDialog> {
         children: [
           const Text('Enter URL'),
           TextFormField(
-            initialValue: result,
+            initialValue: widget.initalString,
             onChanged: (value) {
               //ref.read(messageProvider.notifier).state= value;
               result= value;
@@ -33,8 +35,8 @@ class _MessageDialogState extends State<MessageDialog> {
           ),
           ElevatedButton(
             onPressed: () {
-              // Call the function here to pass back the value -----|
-              widget.onConfirm(result);       // <-------------------|
+              // callback, but if result is empty, return the initial value.
+              widget.onConfirm(result=="" ? widget.initalString : result);
               Navigator.pop(context);
             },
             child: const Text('confirm'),

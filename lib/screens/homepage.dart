@@ -26,6 +26,7 @@ class MyHomePage extends ConsumerWidget {
   static String id = "/home";
   MyHomePage({super.key, required this.title}) {
     initGPT();
+    getClipboardData();
   }
 
   final FlutterInsta flutterInsta= FlutterInsta();
@@ -52,7 +53,6 @@ class MyHomePage extends ConsumerWidget {
     final request = ChatCompleteText(messages: [
       Messages(role: Role.system, content: messageRequest)
     ], maxToken: 8096, model: GptTurbo16k0631Model());
-
 
     String resume= "";
     final response = await openAI?.onChatCompletion(request: request);
@@ -81,7 +81,7 @@ class MyHomePage extends ConsumerWidget {
     );
   }
 
-  getYoutubeVideo(String videoLink, BuildContext context) async {
+  getYoutubeVideo(String videoLink) async {
 
     try {
       var yt = YoutubeExplode();
@@ -132,6 +132,16 @@ class MyHomePage extends ConsumerWidget {
   }
 
 
+  // store clipboard data
+  String currClipboard= "";
+
+  getClipboardData() async {
+    ClipboardData? data = await Clipboard.getData('text/plain');
+    currClipboard= data?.text.toString() ?? "";
+    //ref.read(messageProvider.notifier).state= currClipboard;
+  }
+
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final fileRef= ref.watch(fileProvider);
@@ -145,6 +155,7 @@ class MyHomePage extends ConsumerWidget {
     // });
 
 
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -153,9 +164,6 @@ class MyHomePage extends ConsumerWidget {
             IconButton(
             icon: const Icon(Icons.download),
               onPressed: () async {
-
-                ClipboardData? data = await Clipboard.getData('text/plain');
-                ref.read(messageProvider.notifier).state= data?.text.toString() ?? "";
 
                 if (!context.mounted) return;
                 MessageInputDialog().showInputDialog(context, ref);
@@ -174,9 +182,10 @@ class MyHomePage extends ConsumerWidget {
               showDialog<String>(
                 context: context,
                 builder: (context) => MessageDialog(
+                  initalString: currClipboard,
                   onConfirm: (String value) async {
                     NavigatorState nav = Navigator.of(context);
-                    await getYoutubeVideo(value, context);
+                    await getYoutubeVideo(value);
                     nav.pushNamed(EditYoutubePage.id);
                   },
                 ),
@@ -194,6 +203,7 @@ class MyHomePage extends ConsumerWidget {
           child: Center(
             child: IconButton(onPressed: () {
               MessageDialog(
+                initalString: currClipboard,
                 onConfirm: (String value) {
                   print('Dialog returned value ---> $value');
                 },
