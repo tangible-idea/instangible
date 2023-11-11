@@ -15,7 +15,7 @@ final messageProvider = StateProvider((ref) => '');
 
 class MessageInputDialog {
 
-  static showInputDialog(BuildContext context, WidgetRef ref) {
+  showInputDialog(BuildContext context, WidgetRef ref) {
     String editedValue= ref.watch(messageProvider.notifier).state;
 
     showDialog(
