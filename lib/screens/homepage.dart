@@ -22,15 +22,24 @@ import '../widgets/my_feed_table.dart';
 import '../widgets/message_input_dialog.dart';
 import 'edit_youtube_page.dart';
 
-class MyHomePage extends ConsumerWidget {
+class MyHomePage extends ConsumerWidget with WidgetsBindingObserver {
   static String id = "/home";
   MyHomePage({super.key, required this.title}) {
     initGPT();
     getClipboardData();
+    WidgetsBinding.instance.addObserver(this);
   }
 
   final FlutterInsta flutterInsta= FlutterInsta();
   final String title;
+
+  /// App has come to the foreground
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      getClipboardData();
+    }
+  }
 
   Future<List<int>> _readDocumentData(String name) async {
     File inputFile= File(name);
