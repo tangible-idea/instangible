@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:instagible/screens/homepage.dart';
 import 'package:instagible/widgets/my_feed_table.dart';
 import 'package:path_provider/path_provider.dart';
@@ -104,10 +105,11 @@ class EditYoutubeState extends ConsumerState<EditYoutubePage> {
         title: Text("Instangible", style: Theme.of(context).textTheme.titleLarge),
         actions: [
           IconButton(
-            icon: const Icon(Icons.download),
+            icon: const FaIcon(FontAwesomeIcons.instagram),
             onPressed: () async {
               //ref.read(messageProvider.notifier).state= "gymweirdos";
               //MessageInputDialog.showInputDialog(context, ref);
+              //_editController.exportVideo(onCompleted: onCompleted)
               setState(() {
               });
             },
@@ -118,8 +120,9 @@ class EditYoutubeState extends ConsumerState<EditYoutubePage> {
       children: [
         Expanded(
           child: FractionallySizedBox(
-            heightFactor: 0.8, // 80% width
+            heightFactor: 0.95, // 80% width
             child: Stack(children: [
+              
               VideoViewer(controller: _editController),
               Center(
                 child: AnimatedBuilder(
@@ -151,7 +154,10 @@ class EditYoutubeState extends ConsumerState<EditYoutubePage> {
           ),
         ),
 
-        TrimSlider(controller: _editController),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: TrimSlider(controller: _editController),
+        ),
         //CropGridViewer.preview(controller: _editController),
       ],
     )
