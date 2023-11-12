@@ -7,7 +7,7 @@ class GPTUtils {
   OpenAI? openAI;
   GPTUtils() {
     openAI = OpenAI.instance.build(
-        token: dotenv.get("API_KEY", fallback: ""),
+        token: dotenv.get("GPT_API_KEY", fallback: ""),
         baseOption: HttpSetup(receiveTimeout: const Duration(seconds: 30)),
         enableLog: true);
   }

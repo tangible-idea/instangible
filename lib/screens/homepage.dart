@@ -9,6 +9,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:instagible/riverpod/videoeditlist_provider.dart';
+import 'package:instagible/utils/ai_utils.dart';
 import 'package:instagible/utils/youtube_utils.dart';
 import 'package:instagible/widgets/message_dialog.dart';
 import 'package:path_provider/path_provider.dart';
@@ -32,7 +33,8 @@ class MyHomePage extends ConsumerWidget with WidgetsBindingObserver {
     WidgetsBinding.instance.addObserver(this);
   }
 
-  final GPTUtils gptUtils= GPTUtils();
+  //final GPTUtils gptUtils= GPTUtils();
+  final AIUtils aiUtils= AIUtils();
   final FlutterInsta flutterInsta= FlutterInsta();
   final String title;
 
@@ -134,13 +136,14 @@ class MyHomePage extends ConsumerWidget with WidgetsBindingObserver {
         Expanded(
           flex: 1,
           child: Center(
-            child: IconButton(onPressed: () {
-              MessageDialog(
-                initalString: currClipboard,
-                onConfirm: (String value) {
-                  print('Dialog returned value ---> $value');
-                },
-              );
+            child: IconButton(onPressed: () async {
+              var result= await aiUtils.getQuote();
+              print("result from Quote: ${result.author}");
+
+              var imageURL= await aiUtils.callImageGenBOT(result.author ?? "");
+              print(imageURL);
+
+
             }, icon: const FaIcon(FontAwesomeIcons.robot)),
           ),
         ),
