@@ -54,7 +54,7 @@ class AIUtils {
 
   Future<String> callImageGenBOT(String messageRequest) async {
 
-    String option= ", Grayscale, small image";
+    String option= ", Dark Grayscale, small image";
 
     var dio = Dio();
     var key= dotenv.get("LLM_API_KEY", fallback: "");

@@ -9,6 +9,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:instagible/riverpod/videoeditlist_provider.dart';
+import 'package:instagible/screens/quote_page.dart';
 import 'package:instagible/utils/ai_utils.dart';
 import 'package:instagible/utils/youtube_utils.dart';
 import 'package:instagible/widgets/message_dialog.dart';
@@ -137,12 +138,7 @@ class MyHomePage extends ConsumerWidget with WidgetsBindingObserver {
           flex: 1,
           child: Center(
             child: IconButton(onPressed: () async {
-              var result= await aiUtils.getQuote();
-              print("result from Quote: ${result.author}");
-
-              var imageURL= await aiUtils.callImageGenBOT(result.author ?? "");
-              print(imageURL);
-
+              Navigator.of(context).pushNamed(QuotePage.id);
 
             }, icon: const FaIcon(FontAwesomeIcons.robot)),
           ),

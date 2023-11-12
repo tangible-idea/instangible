@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:instagible/screens/edit_feed_page.dart';
 import 'package:instagible/screens/edit_youtube_page.dart';
 import 'package:instagible/screens/homepage.dart';
+import 'package:instagible/screens/quote_page.dart';
 import 'package:instagible/styles/themes.dart';
 
 void main() async {
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
           MyHomePage.id: (context) => MyHomePage(title: '',),
           EditFeedPage.id: (context) => const EditFeedPage(),
           EditYoutubePage.id: (context) => const EditYoutubePage(),
+          QuotePage.id: (context) => QuotePage(),
         },
         title: 'Instangible',
         theme: AppTheme.lightTheme,
