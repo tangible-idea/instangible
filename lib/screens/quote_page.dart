@@ -22,7 +22,7 @@ class QuoteState extends ConsumerState<QuotePage> {
   }
 
 
-  Widget QuoteContent(Quote quote) {
+  Widget widgetQuoteContent(Quote quote) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -42,7 +42,7 @@ class QuoteState extends ConsumerState<QuotePage> {
       body: SafeArea(
         child: Center(
           child: quoteRef.when(
-              data: (data)=> QuoteContent(data),
+              data: (data)=> widgetQuoteContent(data),
               error: (err, stack) => Text(err.toString()),
               loading: ()=> const Center(child: CircularProgressIndicator())),
         ),

@@ -9,7 +9,7 @@ import '../utils/ai_utils.dart';
 AIUtils aiUtils= AIUtils();
 
 //final genQuoteProvider= StateProvider((ref) => Quote());
-final futureQuoteProvider= FutureProvider<Quote>((ref) async {
+final futureQuoteProvider= FutureProvider.autoDispose<Quote>((ref) async {
   var result= await aiUtils.getQuote();
   print("result from Quote: ${result.author}");
 
