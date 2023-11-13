@@ -18,6 +18,7 @@ class Quote {
   String? id;
   String? content;
   String? author;
+  String? authorImage;
 
   Quote({
     this.id,

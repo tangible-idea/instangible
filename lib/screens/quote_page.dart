@@ -2,39 +2,52 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:instagible/model/quotes.dart';
+import 'package:instagible/riverpod/quote_provider.dart';
 import 'package:instagible/utils/ai_utils.dart';
 
 import '../riverpod/simple_state_provider.dart';
 
-class QuotePage extends ConsumerWidget {
+class QuotePage extends ConsumerStatefulWidget {
   static String id= "QuotePage";
 
-  QuotePage({super.key}) {
-    initPage();
+  @override
+  QuoteState createState() => QuoteState();
+}
+
+class QuoteState extends ConsumerState<QuotePage> {
+
+  @override
+  initState() {
   }
-  AIUtils aiUtils= AIUtils();
 
-  initPage() async {
-    var result= await aiUtils.getQuote();
-    print("result from Quote: ${result.author}");
 
-    var imageURL= await aiUtils.callImageGenBOT(result.author ?? "");
-    print(imageURL);
+  Widget QuoteContent(Quote quote) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Text("${quote.content}\n${quote.author}"),
+        Image.network(quote.authorImage!)
+      ],
+    );
   }
 
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    var quoteRef= ref.watch(genQuoteProvider.notifier);
+  Widget build(BuildContext context) {
+    var quoteRef= ref.watch(futureQuoteProvider);
 
-    return const Scaffold(
+    return Scaffold(
       body: SafeArea(
-        child: Column(children: [
-            Text("content"),
-            //Image(image: image)
-          ],
+        child: Center(
+          child: quoteRef.when(
+              data: (data)=> QuoteContent(data),
+              error: (err, stack) => Text(err.toString()),
+              loading: ()=> const Center(child: CircularProgressIndicator())),
         ),
       ),
     );
   }
+
 }
