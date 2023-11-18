@@ -82,4 +82,32 @@ class AIUtils {
     }
   }
 
+
+  Future<String> callGetDescrption(String messageRequest) async {
+
+    String requestToBot= "'$messageRequest' as Instagram post caption less than 50words with some hashtags.";
+
+    var dio = Dio();
+    var key= dotenv.get("LLM_API_KEY", fallback: "");
+    var response = await dio.request(
+      'https://aiconnect-fjptw3x2.b4a.run/bot/GPT3.5-Turbo?request="$requestToBot"&apikey=$key',
+      options: Options(
+        method: 'GET',
+      ),
+    );
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> dataMap = jsonDecode(json.encode(response.data));
+      if(dataMap.containsKey('message')) {
+        return dataMap['message'].toString().replaceAll('"', '');
+      }
+      else {
+        return "";
+      }
+    }
+    else {
+      return response.statusMessage ?? "";
+    }
+  }
+
 }

@@ -15,6 +15,11 @@ final futureQuoteProvider= FutureProvider.autoDispose<Quote>((ref) async {
 
   var imageURL= await aiUtils.callImageGenBOT(result.author ?? "");
   print(imageURL);
+
+  var caption= await aiUtils.callGetDescrption(result.content.toString());
+  print(caption);
+
   result.authorImage= imageURL;
+  result.caption= caption;
   return result;
 });
