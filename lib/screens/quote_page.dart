@@ -6,6 +6,7 @@ import 'dart:typed_data';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:instagible/model/quotes.dart';
 import 'package:instagible/riverpod/quote_provider.dart';
@@ -74,13 +75,13 @@ class QuoteState extends ConsumerState<QuotePage> {
 
             File file= await pathOfImage.writeAsBytes(bytes!);
             var loginData = FormData.fromMap({
-              'username' : '',
-              'password' : ''
+              'username' : dotenv.get("INSTAGRAM_USERNAME", fallback: ""),
+              'password' : dotenv.get("INSTAGRAM_PASSWORD", fallback: "")
             });
 
             var dio = Dio();
             var response = await dio.post(
-              'https://fastinsta-whulmjii.b4a.run/instagram/login', data: loginData,
+              'https://fastinsta1-ry99i1yh.b4a.run/instagram/login', data: loginData,
             );
 
             String loginSession= "";
@@ -104,7 +105,7 @@ class QuoteState extends ConsumerState<QuotePage> {
             });
 
             var response2 = await dio.post(
-              'https://fastinsta-whulmjii.b4a.run/instagram/publish', data: data,
+              'https://fastinsta1-ry99i1yh.b4a.run/instagram/publish', data: data,
             );
 
             if (response.statusCode == 200) {
