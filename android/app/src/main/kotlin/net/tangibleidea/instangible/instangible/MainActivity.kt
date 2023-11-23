@@ -19,8 +19,14 @@ class MainActivity: FlutterActivity() {
         channel.setMethodCallHandler { call, result ->
             when(call.method) {
                 "sharePhotoToInstagram"-> {
-                    //call.arguments as String
-                    result.success("something to return")
+                    val imagePath: String? = call.argument("imagePath")
+
+                    if (imagePath != null) {
+                        //val imageUri = getUri(imagePath)
+                        createInstagramIntent("image/*", imagePath)
+                        result.success("Share feed success")
+                        return@setMethodCallHandler
+                    }
                 }
                 "getPlatformVersion" -> {
                     result.success("Android ${android.os.Build.VERSION.RELEASE}")
@@ -43,6 +49,25 @@ class MainActivity: FlutterActivity() {
             }
 
         }
+    }
+
+    private fun createInstagramIntent(type: String, mediaPath: String) {
+
+        // Create the new Intent using the 'Send' action.
+        val share = Intent(Intent.ACTION_SEND)
+
+        // Set the MIME type
+        share.setType(type)
+
+        // Create the URI from the media
+        val media = File(mediaPath)
+        val uri: Uri = Uri.fromFile(media)
+
+        // Add the URI to the Intent.
+        share.putExtra(Intent.EXTRA_STREAM, uri)
+
+        // Broadcast the Intent.
+        startActivity(Intent.createChooser(share, "Share to"))
     }
 
     private fun getUri(filePath: String): Uri {

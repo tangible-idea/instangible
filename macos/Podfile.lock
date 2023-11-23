@@ -6,6 +6,8 @@ PODS:
   - ffmpeg_kit_flutter_min_gpl/min-gpl (5.1.0):
     - ffmpeg-kit-macos-min-gpl (= 5.1)
     - FlutterMacOS
+  - flutter_image_compress_macos (1.0.0):
+    - FlutterMacOS
   - FlutterMacOS (1.0.0)
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
@@ -24,6 +26,7 @@ PODS:
 
 DEPENDENCIES:
   - ffmpeg_kit_flutter_min_gpl (from `Flutter/ephemeral/.symlinks/plugins/ffmpeg_kit_flutter_min_gpl/macos`)
+  - flutter_image_compress_macos (from `Flutter/ephemeral/.symlinks/plugins/flutter_image_compress_macos/macos`)
   - FlutterMacOS (from `Flutter/ephemeral`)
   - path_provider_foundation (from `Flutter/ephemeral/.symlinks/plugins/path_provider_foundation/darwin`)
   - sqflite (from `Flutter/ephemeral/.symlinks/plugins/sqflite/macos`)
@@ -38,6 +41,8 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   ffmpeg_kit_flutter_min_gpl:
     :path: Flutter/ephemeral/.symlinks/plugins/ffmpeg_kit_flutter_min_gpl/macos
+  flutter_image_compress_macos:
+    :path: Flutter/ephemeral/.symlinks/plugins/flutter_image_compress_macos/macos
   FlutterMacOS:
     :path: Flutter/ephemeral
   path_provider_foundation:
@@ -52,6 +57,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   ffmpeg-kit-macos-min-gpl: d21cda1f1ca994304f4abdd5143cbe4a6562ba15
   ffmpeg_kit_flutter_min_gpl: 56421f6b1e50eacdea85af38688094bb255896f8
+  flutter_image_compress_macos: c26c3c13ea0f28ae6dea4e139b3292e7729f99f1
   FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   path_provider_foundation: 29f094ae23ebbca9d3d0cec13889cd9060c0e943
@@ -61,4 +67,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 9ebaf0ce3d369aaa26a9ea0e159195ed94724cf3
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.14.2
